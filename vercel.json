@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "cd frontend && npm install --no-bin-links && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": null,
+  "devCommand": "cd frontend && npm run dev",
+  "env": {
+    "VITE_API_URL": "https://microbial-ai.onrender.com"
+  }
+}

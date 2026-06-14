@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+*.egg
+
+# Node / Frontend
+node_modules/
+.vite/
+frontend/dist/
+frontend/node_modules/
+*.log
+npm-debug.log*
+
+# Model weights (large binary)
+model/best.pt
+*.pt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel/

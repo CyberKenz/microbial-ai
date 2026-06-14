@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: microbial-ai
+    runtime: docker
+    repo: https://github.com/YOUR_USERNAME/microbial-ai
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: MODEL_PATH
+        value: /app/model/best.pt
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.25"
+      - key: CORS_ORIGINS
+        value: https://microbialai.vercel.app,https://microbial-ai.onrender.com
+    healthCheckPath: /api/health
