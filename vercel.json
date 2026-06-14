@@ -1,8 +1,7 @@
 {
   "framework": "vite",
-  "rootDirectory": "frontend",
-  "buildCommand": "npm install --no-bin-links && npm run build",
-  "outputDirectory": "dist",
+  "buildCommand": "node build.js",
+  "outputDirectory": "frontend/dist",
   "env": {
     "VITE_API_URL": "https://microbial-ai.onrender.com"
   }
