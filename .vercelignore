@@ -1,0 +1,7 @@
+# Exclude backend files from Vercel (backend runs on Render)
+app/
+model/
+requirements.txt
+Dockerfile
+render.yaml
+start.sh
