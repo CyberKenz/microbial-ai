@@ -4,7 +4,7 @@
   import CameraCapture from './lib/CameraCapture.svelte';
   import CfuSettings from './lib/CfuSettings.svelte';
   import ResultsView from './lib/ResultsView.svelte';
-  import { checkHealth, predictImage, predictAnnotated, calculateCfu, fetchCfuDefaults } from './lib/api.js';
+  import { checkHealth, predictImage, predictAnnotated, fetchCfuDefaults } from './lib/api.js';
 
   let file = null;
   let previewUrl = null;
@@ -38,6 +38,29 @@
     }
   });
 
+  function dilutionDisplay(dil) {
+    if (dil <= 0) return String(dil);
+    const exp = Math.round(Math.log10(dil));
+    if (Math.pow(10, exp) === dil) return exp === 0 ? "10^0 (no dilution)" : `10^${exp}`;
+    return String(dil);
+  }
+
+  function computeCfu(summary, vol, dil) {
+    const total = summary.total_detections;
+    if (total <= 0 || vol <= 0 || dil <= 0) return null;
+    const cfu = total / (vol * dil);
+    return {
+      total_colonies: total,
+      volume_plated_ml: vol,
+      dilution_factor: dil,
+      dilution_display: dilutionDisplay(dil),
+      cfu_per_ml: Math.round(cfu * 100) / 100,
+      cfu_per_ml_scientific: cfu.toExponential(2),
+      formula: "CFU/ml = total_colonies / (volume_plated_ml × dilution_factor)",
+      formula_values: `CFU/ml = ${total} / (${vol} × ${dil}) = ${cfu.toExponential(2)}`,
+    };
+  }
+
   async function analyze() {
     if (!file) return;
     loading = true;
@@ -50,21 +73,15 @@
     }
 
     try {
+      const [jsonResult, annotatedBlobUrl] = await Promise.all([
+        predictImage(file),
+        predictAnnotated(file),
+      ]);
       if (cfuEnabled) {
-        const [cfuResult, annotatedBlobUrl] = await Promise.all([
-          calculateCfu(file, volumePlated, dilutionFactor),
-          predictAnnotated(file),
-        ]);
-        results = cfuResult;
-        annotatedUrl = annotatedBlobUrl;
-      } else {
-        const [jsonResult, annotatedBlobUrl] = await Promise.all([
-          predictImage(file),
-          predictAnnotated(file),
-        ]);
-        results = jsonResult;
-        annotatedUrl = annotatedBlobUrl;
+        jsonResult.cfu_calculation = computeCfu(jsonResult.summary, volumePlated, dilutionFactor);
       }
+      results = jsonResult;
+      annotatedUrl = annotatedBlobUrl;
     } catch (e) {
       error = e.message;
     } finally {
