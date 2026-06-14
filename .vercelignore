@@ -1,7 +1,10 @@
-# Exclude backend files from Vercel (backend runs on Render)
 app/
 model/
 requirements.txt
 Dockerfile
 render.yaml
 start.sh
+build.sh
+.gitignore
+.git/
+*.md

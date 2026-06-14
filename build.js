@@ -1,8 +1,10 @@
 import { execSync } from 'child_process';
 import { existsSync } from 'fs';
-import { resolve } from 'path';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
 
-const frontendDir = resolve(import.meta.dirname, 'frontend');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const frontendDir = resolve(__dirname, 'frontend');
 process.chdir(frontendDir);
 
 if (!existsSync('node_modules')) {
