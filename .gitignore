@@ -15,9 +15,9 @@ frontend/node_modules/
 *.log
 npm-debug.log*
 
-# Model weights (large binary)
-model/best.pt
-*.pt
+# Model weights (large binary - keep in repo for Railway)
+# model/best.pt
+# *.pt
 
 # IDE
 .vscode/
