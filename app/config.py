@@ -17,7 +17,7 @@ MODEL_PATH = os.getenv(
 # Inference settings
 CONFIDENCE_THRESHOLD = float(os.getenv("CONFIDENCE_THRESHOLD", "0.25"))
 IOU_THRESHOLD = float(os.getenv("IOU_THRESHOLD", "0.7"))
-IMG_SIZE = int(os.getenv("IMG_SIZE", "1280"))
+IMG_SIZE = int(os.getenv("IMG_SIZE", "640"))
 MAX_DETECTIONS = int(os.getenv("MAX_DETECTIONS", "500"))
 
 # Server settings
